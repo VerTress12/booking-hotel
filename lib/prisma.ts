@@ -10,9 +10,12 @@ export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
     adapter: new PrismaPg(
-      new Pool({
-        connectionString: process.env.POSTGRES_PRISMA_URL,
-      })
+    new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+})
     ),
   });
 
