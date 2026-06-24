@@ -4,8 +4,14 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import Google from "next-auth/providers/google"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-   adapter: PrismaAdapter(prisma),
-  providers: [Google],
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
+  ],
+  trustHost: true,
   session: { strategy: "jwt" },
   pages: {
     signIn: "/signin",
@@ -17,7 +23,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     session({ session, token }) {
       session.user.id = token.sub;
-      session.user.role = token.role; // ✅ bawa role ke session
+      session.user.role = token.role;
       return session;
     },
   }
