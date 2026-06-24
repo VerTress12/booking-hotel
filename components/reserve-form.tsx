@@ -2,7 +2,7 @@
 import { useState, useActionState } from "react";
 import { addDays, endOfToday } from "date-fns";
 import DatePicker from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css"
+
 import { createReserve } from "@/lib/actions";
 import { RoomDetailProps } from "@/types/room";
 import clsx from "clsx";
@@ -20,6 +20,8 @@ const ReserveForm = ({room}: {room:RoomDetailProps}) => {
         setEndDate(end);
     }
 
+
+    
     const [state,formAction, isPanding] = useActionState(createReserve.bind(null,room.id, room.price,
         starDate, endDate ), null)
 
